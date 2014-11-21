@@ -22,19 +22,14 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
 
+    <reference id="bundleService" interface="org.apache.karaf.bundle.core.BundleService" />
+
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
         <command>
-            <action class="com.savoirtech.karaf.commands.DependenciesList" />
-            <completers>
-                <ref component-id="allFeatureCompleter" />
-            </completers>
+            <action class="com.savoirtech.karaf.commands.DependenciesList">
+                <property name="bundleService" ref="bundleService"/>
+            </action>
         </command>
     </command-bundle>
-
-    <reference id="featuresService" interface="org.apache.karaf.features.FeaturesService" />
-
-    <bean id="allFeatureCompleter" class="org.apache.karaf.features.command.completers.AllFeatureCompleter">
-        <property name="featuresService" ref="featuresService" />
-    </bean>
 
 </blueprint>
